@@ -1,15 +1,16 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { getWeatherFallback } from "./_data/weatherFallback";
 
 type Prefecture = "すべて" | "愛知" | "岐阜" | "三重" | "静岡";
 type Timing = "今日" | "明日" | "今週末";
 
-const prefectures: { name: Prefecture; kana: string; tone: string }[] = [
-  { name: "愛知", kana: "AICHI", tone: "coral" },
-  { name: "岐阜", kana: "GIFU", tone: "green" },
-  { name: "三重", kana: "MIE", tone: "blue" },
-  { name: "静岡", kana: "SHIZUOKA", tone: "amber" },
+const prefectures: { name: Prefecture; kana: string; tone: string; latitude: number; weatherLabel: string }[] = [
+  { name: "愛知", kana: "AICHI", tone: "coral", latitude: 35.1815, weatherLabel: "晴れ" },
+  { name: "岐阜", kana: "GIFU", tone: "green", latitude: 35.4233, weatherLabel: "晴れ" },
+  { name: "三重", kana: "MIE", tone: "blue", latitude: 34.7303, weatherLabel: "晴れ" },
+  { name: "静岡", kana: "SHIZUOKA", tone: "amber", latitude: 34.9756, weatherLabel: "晴れ時々くもり" },
 ];
 
 const events = [
@@ -182,8 +183,13 @@ export default function Home() {
   }
 
   function selectPrefecture(next: Prefecture) {
-    setPrefecture(next);
-    document.getElementById("events")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const routes: Record<Exclude<Prefecture, "すべて">, string> = {
+      愛知: "/aichi",
+      岐阜: "/gifu",
+      三重: "/mie",
+      静岡: "/shizuoka",
+    };
+    if (next !== "すべて") window.location.assign(routes[next]);
   }
 
   return (
@@ -265,9 +271,18 @@ export default function Home() {
                 key={item.name}
                 onClick={() => selectPrefecture(item.name)}
               >
-                <span className="prefecture-shape">{item.name.slice(0, 1)}</span>
-                <span><b>{item.name}</b><small>{item.kana}</small></span>
-                <i aria-hidden="true">→</i>
+                <span className="prefecture-weather">
+                  <small>現在の天気</small>
+                  <strong>{Math.round(getWeatherFallback(item.latitude).current.temperature_2m)}℃</strong>
+                  <b>{item.weatherLabel}</b>
+                  <em>最高 {Math.round(getWeatherFallback(item.latitude).daily.temperature_2m_max[0])}℃ / 最低 {Math.round(getWeatherFallback(item.latitude).daily.temperature_2m_min[0])}℃</em>
+                  <i>降水 {getWeatherFallback(item.latitude).daily.precipitation_probability_max[0]}%</i>
+                </span>
+                <span className="prefecture-main">
+                  <span className="prefecture-shape">{item.name.slice(0, 1)}</span>
+                  <span className="prefecture-name"><b>{item.name}</b><small>{item.kana}</small></span>
+                  <i aria-hidden="true">→</i>
+                </span>
               </button>
             ))}
           </div>
