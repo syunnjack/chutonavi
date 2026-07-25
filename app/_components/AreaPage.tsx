@@ -1,4 +1,5 @@
 import Link from "next/link";
+import WeatherPanel from "./WeatherPanel";
 
 type AreaPageProps = {
   prefecture: string;
@@ -9,6 +10,9 @@ type AreaPageProps = {
   areas: string[];
   highlights: { label: string; title: string; description: string }[];
   questions: { question: string; answer: string }[];
+  weather: { location: string; latitude: number; longitude: number };
+  sourceUrl: string;
+  spots: { name: string; city: string; category: string; description: string; url: string }[];
 };
 
 export default function AreaPage({
@@ -20,6 +24,9 @@ export default function AreaPage({
   areas,
   highlights,
   questions,
+  weather,
+  sourceUrl,
+  spots,
 }: AreaPageProps) {
   const pageUrl = `https://chutonavi.syunnjack.chatgpt.site/${slug}`;
   const structuredData = {
@@ -82,6 +89,8 @@ export default function AreaPage({
         </aside>
       </section>
 
+      <WeatherPanel prefecture={prefecture} location={weather.location} latitude={weather.latitude} longitude={weather.longitude} />
+
       <section className="content-summary" id="today">
         <div><p className="content-kicker">3行でわかる</p><h2>{prefecture}、今日のおでかけ要約</h2></div>
         <p>{summary}</p>
@@ -102,6 +111,24 @@ export default function AreaPage({
             </article>
           ))}
         </div>
+      </section>
+
+      <section className="content-section real-spots-section">
+        <div className="content-section-title"><p className="content-kicker">REAL PLACES</p><h2>{prefecture}の実在スポット</h2><span>{spots.length}件 · 公式情報を参照</span></div>
+        <div className="real-spots-grid">
+          {spots.map((spot, index) => (
+            <article key={spot.name}>
+              <div className={`spot-index spot-index-${(index % 4) + 1}`}><span>{String(index + 1).padStart(2, "0")}</span><small>{spot.category}</small></div>
+              <div>
+                <p>● {spot.city}</p>
+                <h3>{spot.name}</h3>
+                <p>{spot.description}</p>
+                <a href={spot.url} target="_blank" rel="noreferrer">公式情報を確認 ↗</a>
+              </div>
+            </article>
+          ))}
+        </div>
+        <p className="spot-source">掲載確認元：<a href={sourceUrl} target="_blank" rel="noreferrer">{prefecture}県公式観光情報サイト ↗</a>　施設の営業日・料金は必ず公式情報をご確認ください。</p>
       </section>
 
       <section className="content-section area-link-section">
