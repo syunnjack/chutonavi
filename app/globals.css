@@ -109,7 +109,15 @@ button { color: inherit; }
 .prefecture b { color: var(--ink); font-size: 17px; }
 .prefecture small { color: var(--muted); font-size: 8px; letter-spacing: .16em; }
 .prefecture i { color: var(--ink); font-style: normal; margin-left: auto; }
-.hero-note { background: var(--forest-dark); bottom: 0; font-size: 11px; left: 0; padding: 13px 5vw; position: absolute; width: 100%; z-index: 3; }
+.hero-note {
+  background: var(--forest-dark);
+  font-size: 11px;
+  margin: 0 -24px;
+  padding: 13px max(24px, calc((100vw - 1180px) / 2 + 24px));
+  position: relative;
+  width: calc(100% + 48px);
+  z-index: 3;
+}
 .pulse { background: var(--lime); border-radius: 50%; box-shadow: 0 0 0 5px rgba(216,242,74,.12); display: inline-block; height: 7px; margin-right: 10px; width: 7px; }
 
 .answer-strip { background: #eef4e8; border-bottom: 1px solid #d9e3d3; }
