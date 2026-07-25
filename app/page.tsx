@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { getWeatherFallback } from "./_data/weatherFallback";
+import TransportStatusPanel from "./_components/TransportStatusPanel";
 
 type Prefecture = "すべて" | "愛知" | "岐阜" | "三重" | "静岡";
 type Timing = "今日" | "明日" | "今週末";
@@ -289,6 +290,8 @@ export default function Home() {
           <span className="pulse" /> いま、東海4県で <b>428件</b> の情報が更新中
         </div>
       </section>
+
+      <div className="home-transport-wrap"><TransportStatusPanel compact /></div>
 
       <section className="answer-strip" aria-labelledby="today-summary">
         <div className="section answer-grid">

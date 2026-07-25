@@ -1,6 +1,7 @@
 import Link from "next/link";
 import WeatherPanel, { type WeatherResponse } from "./WeatherPanel";
 import { getWeatherFallback } from "../_data/weatherFallback";
+import TransportStatusPanel from "./TransportStatusPanel";
 
 async function getInitialWeather(latitude: number, longitude: number): Promise<WeatherResponse | null> {
   const params = new URLSearchParams({
@@ -117,6 +118,7 @@ export default async function AreaPage({
       </section>
 
       <WeatherPanel prefecture={prefecture} location={weather.location} latitude={weather.latitude} longitude={weather.longitude} initialData={initialWeather} />
+      <TransportStatusPanel prefecture={prefecture as "愛知" | "岐阜" | "三重" | "静岡"} />
 
       <section className="content-summary" id="today">
         <div><p className="content-kicker">3行でわかる</p><h2>{prefecture}、今日のおでかけ要約</h2></div>
