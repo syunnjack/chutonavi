@@ -1,5 +1,28 @@
 import Link from "next/link";
-import WeatherPanel from "./WeatherPanel";
+import WeatherPanel, { type WeatherResponse } from "./WeatherPanel";
+
+async function getInitialWeather(latitude: number, longitude: number): Promise<WeatherResponse | null> {
+  const params = new URLSearchParams({
+    latitude: String(latitude),
+    longitude: String(longitude),
+    timezone: "Asia/Tokyo",
+    forecast_days: "7",
+    current: "temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m",
+    hourly: "temperature_2m,precipitation_probability,weather_code",
+    daily: "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max",
+  });
+
+  try {
+    const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params.toString()}`, {
+      cache: "no-store",
+      headers: { Accept: "application/json" },
+    });
+    if (!response.ok) return null;
+    return response.json() as Promise<WeatherResponse>;
+  } catch {
+    return null;
+  }
+}
 
 type AreaPageProps = {
   prefecture: string;
@@ -16,7 +39,7 @@ type AreaPageProps = {
   municipalSources: { municipality: string; title: string; description: string; url: string }[];
 };
 
-export default function AreaPage({
+export default async function AreaPage({
   prefecture,
   slug,
   english,
@@ -30,6 +53,7 @@ export default function AreaPage({
   spots,
   municipalSources,
 }: AreaPageProps) {
+  const initialWeather = await getInitialWeather(weather.latitude, weather.longitude);
   const pageUrl = `https://chutonavi.syunnjack.chatgpt.site/${slug}`;
   const structuredData = {
     "@context": "https://schema.org",
@@ -91,7 +115,7 @@ export default function AreaPage({
         </aside>
       </section>
 
-      <WeatherPanel prefecture={prefecture} location={weather.location} latitude={weather.latitude} longitude={weather.longitude} />
+      <WeatherPanel prefecture={prefecture} location={weather.location} latitude={weather.latitude} longitude={weather.longitude} initialData={initialWeather} />
 
       <section className="content-summary" id="today">
         <div><p className="content-kicker">3行でわかる</p><h2>{prefecture}、今日のおでかけ要約</h2></div>

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-type WeatherResponse = {
+export type WeatherResponse = {
   current: {
     time: string;
     temperature_2m: number;
@@ -31,6 +31,7 @@ type WeatherPanelProps = {
   location: string;
   latitude: number;
   longitude: number;
+  initialData?: WeatherResponse | null;
 };
 
 const weatherLabels: Record<number, { icon: string; label: string }> = {
@@ -63,8 +64,8 @@ function getWeather(code: number) {
   return weatherLabels[code] ?? { icon: "🌡️", label: "変わりやすい天気" };
 }
 
-export default function WeatherPanel({ prefecture, location, latitude, longitude }: WeatherPanelProps) {
-  const [weather, setWeather] = useState<WeatherResponse | null>(null);
+export default function WeatherPanel({ prefecture, location, latitude, longitude, initialData = null }: WeatherPanelProps) {
+  const [weather, setWeather] = useState<WeatherResponse | null>(initialData);
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -73,14 +74,33 @@ export default function WeatherPanel({ prefecture, location, latitude, longitude
       longitude: String(longitude),
     });
 
-    fetch(`/api/weather?${params.toString()}`)
-      .then((response) => {
-        if (!response.ok) throw new Error("Weather request failed");
-        return response.json();
-      })
+    const directParams = new URLSearchParams({
+      latitude: String(latitude),
+      longitude: String(longitude),
+      timezone: "Asia/Tokyo",
+      forecast_days: "7",
+      current: "temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m",
+      hourly: "temperature_2m,precipitation_probability,weather_code",
+      daily: "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max",
+    });
+
+    const readWeather = async (url: string) => {
+      const response = await fetch(url, { signal: AbortSignal.timeout(8000) });
+      if (!response.ok) throw new Error("Weather request failed");
+      const data = await response.json() as WeatherResponse;
+      if (!data.current || !data.hourly || !data.daily) throw new Error("Invalid weather response");
+      return data;
+    };
+
+    Promise.any([
+      readWeather(`https://api.open-meteo.com/v1/forecast?${directParams.toString()}`),
+      readWeather(`/api/weather?${params.toString()}`),
+    ])
       .then((data: WeatherResponse) => setWeather(data))
-      .catch(() => setError(true));
-  }, [latitude, longitude]);
+      .catch(() => {
+        if (!initialData) setError(true);
+      });
+  }, [initialData, latitude, longitude]);
 
   if (error) {
     return <section className="weather-panel weather-error"><p>天気情報を取得できませんでした。時間をおいて再読み込みしてください。</p></section>;
