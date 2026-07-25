@@ -229,11 +229,11 @@ button { color: inherit; }
 .area-grid { display: grid; gap: 12px; grid-template-columns: repeat(4,1fr); margin-top: 38px; }
 .area-column { background: white; border-top: 4px solid var(--coral); }
 .area-2 { border-color: var(--green); }.area-3 { border-color: var(--blue); }.area-4 { border-color: var(--amber); }
-.area-column > button { align-items: center; background: transparent; border: 0; cursor: pointer; display: flex; padding: 20px; text-align: left; width: 100%; }
-.area-column > button span { display: flex; flex-direction: column; }
-.area-column > button b { font-size: 19px; }
-.area-column > button small { color: var(--muted); font-size: 7px; letter-spacing: .16em; }
-.area-column > button i { font-style: normal; margin-left: auto; }
+.area-column > button, .area-page-link { align-items: center; background: transparent; border: 0; cursor: pointer; display: flex; padding: 20px; text-align: left; width: 100%; }
+.area-column > button span, .area-page-link span { display: flex; flex-direction: column; }
+.area-column > button b, .area-page-link b { font-size: 19px; }
+.area-column > button small, .area-page-link small { color: var(--muted); font-size: 7px; letter-spacing: .16em; }
+.area-column > button i, .area-page-link i { font-style: normal; margin-left: auto; }
 .area-column ul { border-top: 1px solid var(--line); list-style: none; margin: 0; padding: 8px 20px 14px; }
 .area-column li a { color: #536259; display: flex; font-size: 10px; justify-content: space-between; padding: 7px 0; }
 .area-column li a:hover { color: var(--forest); font-weight: 800; }

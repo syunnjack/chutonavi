@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import "./seo-pages.css";
 
 const siteUrl = "https://chutonavi.syunnjack.chatgpt.site";
 

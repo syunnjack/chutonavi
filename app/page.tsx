@@ -324,7 +324,7 @@ export default function Home() {
                 </div>
                 <div className="event-body">
                   <div className="event-meta"><span>● {event.prefecture}・{event.area}</span><span>{event.time}</span></div>
-                  <h3>{event.title}</h3>
+                  <h3>{event.id === 1 ? <a href="/events/nagoya-summer-market">{event.title}</a> : event.title}</h3>
                   <p className="event-category">{event.category} <b>·</b> {event.price}</p>
                   <div className="tag-row">
                     {event.tags.map((tag) => <span key={tag}>{tag}</span>)}
@@ -417,9 +417,9 @@ export default function Home() {
           <div className="area-grid">
             {areaLinks.map(([pref, ...areas], index) => (
               <article className={`area-column area-${index + 1}`} key={pref}>
-                <button type="button" onClick={() => selectPrefecture(pref as Prefecture)}>
+                <a className="area-page-link" href={`/${["aichi", "gifu", "mie", "shizuoka"][index]}`}>
                   <span><b>{pref}</b><small>{prefectures[index].kana}</small></span><i>→</i>
-                </button>
+                </a>
                 <ul>{areas.map((area) => <li key={area}><a href="#events">{area}<span>›</span></a></li>)}</ul>
               </article>
             ))}
