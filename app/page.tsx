@@ -94,6 +94,64 @@ const areaLinks = [
   ["静岡", "伊豆・熱海", "沼津・三島", "富士", "静岡・清水", "浜松"],
 ];
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://chutonavi.syunnjack.chatgpt.site/#website",
+      url: "https://chutonavi.syunnjack.chatgpt.site/",
+      name: "中部・東海ナビ",
+      description: "愛知・岐阜・三重・静岡の今日使える地域情報ナビ",
+      inLanguage: "ja",
+      potentialAction: {
+        "@type": "SearchAction",
+        target: "https://chutonavi.syunnjack.chatgpt.site/?q={search_term_string}",
+        "query-input": "required name=search_term_string",
+      },
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://chutonavi.syunnjack.chatgpt.site/#organization",
+      name: "中部・東海ナビ編集部",
+      url: "https://chutonavi.syunnjack.chatgpt.site/",
+      logo: "https://chutonavi.syunnjack.chatgpt.site/favicon.svg",
+      areaServed: ["愛知県", "岐阜県", "三重県", "静岡県"],
+    },
+    {
+      "@type": "ItemList",
+      name: "東海4県の注目イベント",
+      itemListElement: events.map((event, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: event.title,
+        url: `https://chutonavi.syunnjack.chatgpt.site/#event-${event.id}`,
+      })),
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "中部・東海ナビではどの地域の情報を探せますか？",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "愛知県、岐阜県、三重県、静岡県のイベント、開店・閉店、混雑、地域の投稿を探せます。",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "掲載情報はどのように確認していますか？",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "公式情報、編集部の現地確認、地域ユーザーの投稿を区別し、確認状態と最終更新時刻を表示します。",
+          },
+        },
+      ],
+    },
+  ],
+};
+
 export default function Home() {
   const [prefecture, setPrefecture] = useState<Prefecture>("すべて");
   const [timing, setTiming] = useState<Timing>("今日");
@@ -126,6 +184,10 @@ export default function Home() {
 
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <header className="site-header">
         <a className="brand" href="#top" aria-label="中部・東海ナビ ホーム">
           <span className="brand-mark" aria-hidden="true"><i /><i /><i /><i /></span>
@@ -211,6 +273,27 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="answer-strip" aria-labelledby="today-summary">
+        <div className="section answer-grid">
+          <div>
+            <p className="section-kicker">TODAY AT A GLANCE</p>
+            <h2 id="today-summary">東海4県、今日のおでかけ要約</h2>
+            <p>2026年7月25日 13:00更新。公式情報と現地投稿をもとに、いま役立つ情報を短くまとめています。</p>
+          </div>
+          <dl>
+            <div><dt>今日のイベント</dt><dd>126<small>件</small></dd></div>
+            <div><dt>無料イベント</dt><dd>48<small>件</small></dd></div>
+            <div><dt>現地からの更新</dt><dd>37<small>件</small></dd></div>
+          </dl>
+          <ul>
+            <li><span>愛知</span>名古屋中心部は夕方から混雑見込み</li>
+            <li><span>岐阜</span>飛騨エリアは午後も屋外イベント開催</li>
+            <li><span>三重</span>伊勢志摩は一部で急な雨に注意</li>
+            <li><span>静岡</span>浜松・静岡市で夏祭りを開催</li>
+          </ul>
+        </div>
+      </section>
+
       <section className="section events-section" id="events">
         <div className="section-heading">
           <div>
@@ -226,7 +309,7 @@ export default function Home() {
         {filteredEvents.length > 0 ? (
           <div className="event-grid">
             {filteredEvents.map((event) => (
-              <article className="event-card" key={event.id}>
+              <article className="event-card" key={event.id} id={`event-${event.id}`}>
                 <div className={`event-visual ${event.visual}`}>
                   <div className="date-card"><b>{event.day}</b><span>{event.month}</span></div>
                   <span className="visual-word" aria-hidden="true">{event.prefecture}</span>
@@ -344,6 +427,39 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="section trust-section">
+        <div className="trust-copy">
+          <p className="section-kicker">OPEN &amp; TRUSTED</p>
+          <h2>地域のみんなで、<br />情報を新しく保つ。</h2>
+          <p>投稿は確認状態を明示し、訂正履歴を残します。AIや検索から訪れた人にも、情報源と鮮度がすぐ伝わる設計です。</p>
+        </div>
+        <div className="trust-steps">
+          <article><span>01</span><div><h3>投稿する</h3><p>イベント、混雑、新店など地域の「いま」を共有。</p></div></article>
+          <article><span>02</span><div><h3>確かめる</h3><p>公式発表、現地確認、投稿情報を分けて表示。</p></div></article>
+          <article><span>03</span><div><h3>役立てる</h3><p>保存や共有が次のおでかけと地域の応援につながる。</p></div></article>
+        </div>
+      </section>
+
+      <section className="faq-section">
+        <div className="section faq-inner">
+          <div><p className="section-kicker light">QUICK ANSWERS</p><h2>よくある質問</h2></div>
+          <div className="faq-list">
+            <details open>
+              <summary>どの地域の情報を探せますか？<span>＋</span></summary>
+              <p>愛知県、岐阜県、三重県、静岡県のイベント、開店・閉店、混雑、地域の投稿を探せます。今後、市区町村ごとのページを順次拡充します。</p>
+            </details>
+            <details>
+              <summary>掲載情報はどのように確認していますか？<span>＋</span></summary>
+              <p>公式情報、編集部の現地確認、地域ユーザーの投稿を区別し、各情報に確認状態と最終更新時刻を表示します。</p>
+            </details>
+            <details>
+              <summary>イベントや新店情報を投稿できますか？<span>＋</span></summary>
+              <p>どなたでも投稿できます。公開前に内容を確認し、個人情報や誹謗中傷を含む投稿は掲載しません。</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
       <section className="newsletter">
         <div>
           <p className="section-kicker light">YOUR WEEKEND, SORTED.</p>
@@ -371,6 +487,14 @@ export default function Home() {
         </div>
         <div className="footer-bottom"><span>© 2026 CHUBU TOKAI NAVI</span><span>情報の正確性を大切に、地域と一緒につくるナビ。</span></div>
       </footer>
+
+      <nav className="mobile-dock" aria-label="モバイルメニュー">
+        <a href="#top"><span>⌂</span>ホーム</a>
+        <a href="#events"><span>⌕</span>探す</a>
+        <button type="button"><span>＋</span>投稿</button>
+        <a href="#community"><span>♧</span>みんな</a>
+        <a href="#areas"><span>◎</span>エリア</a>
+      </nav>
     </main>
   );
 }
