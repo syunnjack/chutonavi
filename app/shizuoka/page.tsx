@@ -16,5 +16,10 @@ export default function ShizuokaPage() {
     {name:"伊豆シャボテン動物公園",city:"伊東市",category:"家族",description:"動物との近さと世界のサボテン展示が特徴。",url:"https://izushaboten.com/"},
     {name:"浜松城",city:"浜松市",category:"歴史",description:"徳川家康公が17年間在城した出世城。",url:"https://www.entetsuassist-dms.com/hamamatsu-jyo/"},
     {name:"浜名湖ガーデンパーク",city:"浜松市",category:"公園",description:"四季の花と水辺を無料で楽しめる広大な都市公園。",url:"https://www.hamanako-gardenpark.jp/"},
+  ]} municipalSources={[
+    {municipality:"静岡市",title:"観光・文化情報",description:"日本平、三保、久能山、中心市街地の観光とイベントの市公式情報です。",url:"https://www.city.shizuoka.lg.jp/kankou/"},
+    {municipality:"浜松市",title:"観光・イベント情報",description:"浜名湖、音楽、徳川家康ゆかりの地、季節イベントを確認できます。",url:"https://www.city.hamamatsu.shizuoka.jp/kanko/"},
+    {municipality:"熱海市",title:"観光・花火情報",description:"海上花火大会、梅園、海水浴場、交通・観光の市公式案内です。",url:"https://www.city.atami.lg.jp/kanko/"},
+    {municipality:"富士宮市",title:"富士山・観光情報",description:"富士山の登山・規制、浅間大社、白糸ノ滝と周辺観光の公式情報です。",url:"https://www.city.fujinomiya.lg.jp/kankou/"},
   ]} areas={["伊豆・熱海", "沼津・三島", "富士", "静岡・清水", "焼津・藤枝", "浜松・浜名湖"]} highlights={[{label:"夏",title:"浜名湖サマーパーク",description:"水辺の体験と地元グルメを家族で楽しめます。"},{label:"海",title:"伊豆、朝の海岸ドライブ",description:"渋滞を避けて楽しむ展望スポットと朝ごはん。"},{label:"新店",title:"静岡・鷹匠の新しい店",description:"歩いて巡れるカフェとベーカリーの最新情報。"}]} questions={[{question:"静岡県の花火大会情報はありますか？",answer:"開催日、会場、交通規制、駐車場、延期情報を大会ごとに更新します。"},{question:"伊豆の道路は混雑していますか？",answer:"夏の週末は午前10時以降に海沿いが混みやすいため、早めの移動がおすすめです。"},{question:"富士山が見える場所を探せますか？",answer:"富士・御殿場・沼津周辺の展望スポットと、現地からの見え方投稿を掲載します。"}]} />;
 }

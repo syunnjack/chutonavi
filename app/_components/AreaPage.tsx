@@ -13,6 +13,7 @@ type AreaPageProps = {
   weather: { location: string; latitude: number; longitude: number };
   sourceUrl: string;
   spots: { name: string; city: string; category: string; description: string; url: string }[];
+  municipalSources: { municipality: string; title: string; description: string; url: string }[];
 };
 
 export default function AreaPage({
@@ -27,6 +28,7 @@ export default function AreaPage({
   weather,
   sourceUrl,
   spots,
+  municipalSources,
 }: AreaPageProps) {
   const pageUrl = `https://chutonavi.syunnjack.chatgpt.site/${slug}`;
   const structuredData = {
@@ -129,6 +131,25 @@ export default function AreaPage({
           ))}
         </div>
         <p className="spot-source">掲載確認元：<a href={sourceUrl} target="_blank" rel="noreferrer">{prefecture}県公式観光情報サイト ↗</a>　施設の営業日・料金は必ず公式情報をご確認ください。</p>
+      </section>
+
+      <section className="content-section municipal-section">
+        <div className="content-section-title">
+          <p className="content-kicker">MUNICIPAL OFFICIAL INFO</p>
+          <h2>自治体の公式・現地情報</h2>
+          <span>{municipalSources.length}自治体の一次情報</span>
+        </div>
+        <p className="municipal-intro">開催日、休館、交通規制、防災情報など、予定を決める前に確認したい自治体の公式ページをまとめました。</p>
+        <div className="municipal-grid">
+          {municipalSources.map((source) => (
+            <a href={source.url} target="_blank" rel="noreferrer" key={source.municipality}>
+              <small>{source.municipality} OFFICIAL</small>
+              <h3>{source.title}</h3>
+              <p>{source.description}</p>
+              <span>公式ページで最新情報を見る ↗</span>
+            </a>
+          ))}
+        </div>
       </section>
 
       <section className="content-section area-link-section">

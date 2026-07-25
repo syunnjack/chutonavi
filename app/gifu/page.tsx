@@ -16,5 +16,10 @@ export default function GifuPage() {
     {name:"馬籠宿",city:"中津川市",category:"宿場町",description:"石畳の坂道に町家が並ぶ中山道の宿場町。",url:"https://kiso-magome.com/"},
     {name:"恵那峡",city:"恵那市",category:"渓谷",description:"奇岩と湖面の景観を遊覧船から楽しめる渓谷。",url:"https://www.kankou-ena.jp/"},
     {name:"ぎふ清流里山公園",city:"美濃加茂市",category:"家族",description:"里山体験、遊具、グルメを楽しめる入園無料の公園。",url:"https://satoyama-park.gifu.jp/"},
+  ]} municipalSources={[
+    {municipality:"岐阜市",title:"観光・文化情報",description:"岐阜城、金華山、長良川鵜飼、文化施設とイベントの公式情報です。",url:"https://www.city.gifu.lg.jp/kankoubunka/"},
+    {municipality:"高山市",title:"観光・祭り情報",description:"古い町並、高山祭、交通・駐車場など旅行前に役立つ市公式案内です。",url:"https://www.city.takayama.lg.jp/kanko/"},
+    {municipality:"下呂市",title:"観光・温泉情報",description:"下呂温泉、周辺観光、季節イベントに関する市の公式情報です。",url:"https://www.city.gero.lg.jp/site/kanko/"},
+    {municipality:"郡上市",title:"観光・文化情報",description:"郡上おどり、郡上八幡、白鳥・高鷲方面の地域情報を確認できます。",url:"https://www.city.gujo.gifu.jp/"},
   ]} areas={["岐阜・西濃", "東濃", "中濃", "郡上", "下呂", "飛騨高山"]} highlights={[{label:"祭り",title:"郡上おどり 夏の宵",description:"地元で受け継がれる夏の踊り。夜まで楽しめます。"},{label:"朝旅",title:"飛騨高山、朝のまち歩き",description:"混雑前に巡る古い町並みと朝市のモデルコース。"},{label:"自然",title:"清流沿いの涼しい寄り道",description:"ドライブ途中に立ち寄れる川辺と道の駅を紹介。"}]} questions={[{question:"岐阜で今週末に開催される祭りは？",answer:"郡上、岐阜市、東濃を中心に夏祭りと地域行事を掲載しています。"},{question:"飛騨高山は何時ごろが歩きやすいですか？",answer:"夏季は午前9時前後が比較的歩きやすく、朝市にも立ち寄れます。"},{question:"雨の日でも楽しめますか？",answer:"博物館、工芸体験、屋内温泉など、雨天向けの情報も絞り込めます。"}]} />;
 }

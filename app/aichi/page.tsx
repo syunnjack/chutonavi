@@ -21,5 +21,10 @@ export default function AichiPage() {
     {name:"南知多ビーチランド",city:"美浜町",category:"家族",description:"海の生き物との距離が近い体験型水族館。",url:"https://beachland.jp/"},
     {name:"岡崎城",city:"岡崎市",category:"歴史",description:"徳川家康公生誕の地として知られる岡崎公園の城。",url:"https://okazaki-kanko.jp/okazaki-park/feature/okazakijo/top"},
     {name:"ラグーナテンボス",city:"蒲郡市",category:"レジャー",description:"テーマパーク、買い物、温泉が集まる複合リゾート。",url:"https://www.lagunatenbosch.co.jp/"},
+  ]} municipalSources={[
+    {municipality:"名古屋市",title:"観光・イベント情報",description:"市内イベント、文化施設、名古屋城や東山動植物園などの市公式情報を確認できます。",url:"https://www.city.nagoya.jp/kankou/index.html"},
+    {municipality:"犬山市",title:"観光・文化財情報",description:"国宝犬山城、城下町、文化財、祭りに関する市の案内です。",url:"https://www.city.inuyama.aichi.jp/kanko/"},
+    {municipality:"岡崎市",title:"観光・イベント情報",description:"岡崎城、家康公ゆかりの地、市内イベントの一次情報を確認できます。",url:"https://www.city.okazaki.lg.jp/300/306/"},
+    {municipality:"蒲郡市",title:"観光・潮干狩り情報",description:"海辺の観光、潮干狩り、祭り、交通に関する市公式案内です。",url:"https://www.city.gamagori.lg.jp/life/5/"},
   ]} areas={["名古屋", "尾張・犬山", "知多半島", "西三河", "東三河", "奥三河"]} highlights={[{label:"今日",title:"なごや夏の夜市 2026",description:"夕方から楽しめる屋台と音楽。入場無料、家族で立ち寄れます。"},{label:"新店",title:"名古屋駅周辺の新しい喫茶店",description:"地元で話題になっている新店を、営業時間とともに紹介。"},{label:"無料",title:"愛知の水遊びスポット",description:"子どもと無料で楽しめる公園と噴水エリアをまとめました。"}]} questions={[{question:"愛知県で今日開催される無料イベントは？",answer:"名古屋市内のマルシェや公園イベントを中心に19件掲載しています。開催状況は各詳細ページの確認状態をご覧ください。"},{question:"雨の日に子どもと遊べる場所は？",answer:"名古屋市科学館周辺、トヨタ産業技術記念館などの屋内施設と、当日参加できる体験イベントを掲載しています。"},{question:"名古屋以外の情報もありますか？",answer:"尾張、知多、西三河、東三河、奥三河まで、愛知県内を6エリアに分けて掲載しています。"}]} />;
 }
