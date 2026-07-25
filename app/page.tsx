@@ -15,6 +15,7 @@ const prefectures: { name: Prefecture; kana: string; tone: string }[] = [
 const events = [
   {
     id: 1,
+    url: "/events/nagoya-summer-market",
     prefecture: "愛知",
     area: "名古屋・栄",
     date: "今日",
@@ -30,6 +31,7 @@ const events = [
   },
   {
     id: 2,
+    url: "https://www.city.gujo.gifu.jp/",
     prefecture: "岐阜",
     area: "郡上市",
     date: "今日",
@@ -45,6 +47,7 @@ const events = [
   },
   {
     id: 3,
+    url: "https://www.city.ise.mie.jp/kankou/",
     prefecture: "三重",
     area: "伊勢市",
     date: "明日",
@@ -60,6 +63,7 @@ const events = [
   },
   {
     id: 4,
+    url: "https://www.city.hamamatsu.shizuoka.jp/kanko/",
     prefecture: "静岡",
     area: "浜松・浜名湖",
     date: "今週末",
@@ -324,7 +328,8 @@ export default function Home() {
                 </div>
                 <div className="event-body">
                   <div className="event-meta"><span>● {event.prefecture}・{event.area}</span><span>{event.time}</span></div>
-                  <h3>{event.id === 1 ? <a href="/events/nagoya-summer-market">{event.title}</a> : event.title}</h3>
+                  <h3><a href={event.url} target={event.url.startsWith("http") ? "_blank" : undefined} rel={event.url.startsWith("http") ? "noreferrer" : undefined}>{event.title}</a></h3>
+                  <a className="event-detail-link" href={event.url} target={event.url.startsWith("http") ? "_blank" : undefined} rel={event.url.startsWith("http") ? "noreferrer" : undefined}>詳細・公式情報を見る →</a>
                   <p className="event-category">{event.category} <b>·</b> {event.price}</p>
                   <div className="tag-row">
                     {event.tags.map((tag) => <span key={tag}>{tag}</span>)}

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import WeatherPanel, { type WeatherResponse } from "./WeatherPanel";
+import { getWeatherFallback } from "../_data/weatherFallback";
 
 async function getInitialWeather(latitude: number, longitude: number): Promise<WeatherResponse | null> {
   const params = new URLSearchParams({
@@ -17,10 +18,10 @@ async function getInitialWeather(latitude: number, longitude: number): Promise<W
       cache: "no-store",
       headers: { Accept: "application/json" },
     });
-    if (!response.ok) return null;
+    if (!response.ok) return getWeatherFallback(latitude);
     return response.json() as Promise<WeatherResponse>;
   } catch {
-    return null;
+    return getWeatherFallback(latitude);
   }
 }
 
@@ -133,7 +134,7 @@ export default async function AreaPage({
           {highlights.map((item, index) => (
             <article key={item.title}>
               <div className={`highlight-visual highlight-${index + 1}`}><span>{item.label}</span></div>
-              <div><small>{prefecture} · 2026年7月</small><h3>{item.title}</h3><p>{item.description}</p><Link href={index === 0 && slug === "aichi" ? "/events/nagoya-summer-market" : "/#events"}>詳しく見る →</Link></div>
+              <div><small>{prefecture} · 2026年7月</small><h3>{item.title}</h3><p>{item.description}</p>{index === 0 && slug === "aichi" ? <Link href="/events/nagoya-summer-market">詳しく見る →</Link> : <a href={sourceUrl} target="_blank" rel="noreferrer">公式情報を見る ↗</a>}</div>
             </article>
           ))}
         </div>
@@ -179,7 +180,7 @@ export default async function AreaPage({
       <section className="content-section area-link-section">
         <div className="content-section-title"><p className="content-kicker">EXPLORE</p><h2>{prefecture}をエリアから探す</h2></div>
         <div className="local-area-grid">
-          {areas.map((area, index) => <Link href="/#events" key={area}><span>0{index + 1}</span><b>{area}</b><i>→</i></Link>)}
+          {areas.map((area, index) => <a href={sourceUrl} target="_blank" rel="noreferrer" key={area}><span>0{index + 1}</span><b>{area}</b><i>↗</i></a>)}
         </div>
       </section>
 
