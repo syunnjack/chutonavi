@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import RoutePlanner from "../../_components/RoutePlanner";
 
 export const metadata: Metadata = {
   title: "なごや夏の夜市2026｜開催時間・アクセス・混雑情報",
@@ -26,6 +27,7 @@ export default function EventPage() {
       <div className="event-detail-layout">
         <div className="event-main">
           <section className="event-answer"><p className="content-kicker">結論から</p><h2>今日11時から、久屋大通公園で開催。</h2><p>入場無料、雨天決行です。子ども向け企画は17時まで。混雑を避けるなら14時以前の来場がおすすめです。</p></section>
+          <RoutePlanner destination="久屋大通公園" latitude={35.1723} longitude={136.9084} />
           <section><h2>開催情報</h2><dl className="event-facts"><div><dt>開催日</dt><dd>2026年7月25日（土）</dd></div><div><dt>時間</dt><dd>11:00〜20:00</dd></div><div><dt>会場</dt><dd>久屋大通公園</dd></div><div><dt>料金</dt><dd>入場無料</dd></div><div><dt>雨天</dt><dd>雨天決行・荒天中止</dd></div><div><dt>最終確認</dt><dd>7月25日 12:40</dd></div></dl></section>
           <section><h2>現地の混雑情報</h2><div className="crowd-meter"><span>現在</span><b>やや空いています</b><i><em /></i><small>地域ユーザー3名の投稿を集計 · 12分前</small></div></section>
           <section><h2>子連れで行く人へ</h2><p>噴水エリア近くに休憩スペースがあります。ベビーカーで移動できますが、夕方以降は通路が混みやすくなります。</p></section>

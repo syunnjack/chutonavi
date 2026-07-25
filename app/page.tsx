@@ -301,7 +301,7 @@ export default function Home() {
             <h2>{prefecture === "すべて" ? "東海4県" : prefecture}の{timing}、何がある？</h2>
           </div>
           <div className="section-controls">
-            <button className="location-button" type="button" onClick={() => setPrefecture("すべて")}>⌖ 現在地から</button>
+            <a className="location-button" href="/events/nagoya-summer-market#route">⌖ 現在地からルート</a>
             <a href="#areas">すべて見る <span>→</span></a>
           </div>
         </div>

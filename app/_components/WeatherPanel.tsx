@@ -71,14 +71,9 @@ export default function WeatherPanel({ prefecture, location, latitude, longitude
     const params = new URLSearchParams({
       latitude: String(latitude),
       longitude: String(longitude),
-      timezone: "Asia/Tokyo",
-      forecast_days: "7",
-      current: "temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m",
-      hourly: "temperature_2m,precipitation_probability,weather_code",
-      daily: "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max",
     });
 
-    fetch(`https://api.open-meteo.com/v1/forecast?${params.toString()}`)
+    fetch(`/api/weather?${params.toString()}`)
       .then((response) => {
         if (!response.ok) throw new Error("Weather request failed");
         return response.json();
