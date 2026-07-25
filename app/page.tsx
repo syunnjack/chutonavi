@@ -1,0 +1,376 @@
+"use client";
+
+import { useMemo, useState } from "react";
+
+type Prefecture = "すべて" | "愛知" | "岐阜" | "三重" | "静岡";
+type Timing = "今日" | "明日" | "今週末";
+
+const prefectures: { name: Prefecture; kana: string; tone: string }[] = [
+  { name: "愛知", kana: "AICHI", tone: "coral" },
+  { name: "岐阜", kana: "GIFU", tone: "green" },
+  { name: "三重", kana: "MIE", tone: "blue" },
+  { name: "静岡", kana: "SHIZUOKA", tone: "amber" },
+];
+
+const events = [
+  {
+    id: 1,
+    prefecture: "愛知",
+    area: "名古屋・栄",
+    date: "今日",
+    day: "25",
+    month: "7月",
+    time: "11:00–20:00",
+    title: "なごや夏の夜市 2026",
+    category: "祭り・マルシェ",
+    price: "入場無料",
+    tags: ["子ども向け", "雨天決行"],
+    visual: "lantern",
+    verified: "公式確認済み",
+  },
+  {
+    id: 2,
+    prefecture: "岐阜",
+    area: "郡上市",
+    date: "今日",
+    day: "25",
+    month: "7月",
+    time: "19:30–22:30",
+    title: "郡上おどり 夏の宵",
+    category: "伝統・祭り",
+    price: "観覧無料",
+    tags: ["夜イベント", "屋外"],
+    visual: "dance",
+    verified: "公式確認済み",
+  },
+  {
+    id: 3,
+    prefecture: "三重",
+    area: "伊勢市",
+    date: "明日",
+    day: "26",
+    month: "7月",
+    time: "9:00–15:00",
+    title: "伊勢の朝市とクラフト市",
+    category: "グルメ・買い物",
+    price: "入場無料",
+    tags: ["朝から", "駐車場あり"],
+    visual: "market",
+    verified: "現地確認済み",
+  },
+  {
+    id: 4,
+    prefecture: "静岡",
+    area: "浜松・浜名湖",
+    date: "今週末",
+    day: "27",
+    month: "7月",
+    time: "10:00–17:00",
+    title: "浜名湖サマーパーク",
+    category: "自然・体験",
+    price: "大人 500円",
+    tags: ["水遊び", "家族向け"],
+    visual: "lake",
+    verified: "公式確認済み",
+  },
+];
+
+const openings = [
+  { prefecture: "愛知", area: "名古屋駅", date: "7/24", title: "喫茶トウカイ", type: "NEW", kind: "純喫茶" },
+  { prefecture: "静岡", area: "静岡・鷹匠", date: "7/22", title: "まちのベーカリー ao", type: "NEW", kind: "パン" },
+  { prefecture: "三重", area: "四日市", date: "7/21", title: "湯の山スタンド", type: "RENEW", kind: "カフェ" },
+];
+
+const posts = [
+  { area: "名古屋市", time: "12分前", title: "久屋大通公園、噴水エリアは空いてます", body: "日陰のベンチもまだ余裕あり。夕方は混みそうです。", reactions: 24, avatar: "な" },
+  { area: "高山市", time: "38分前", title: "古い町並み周辺の駐車場について", body: "駅西側は待ち時間なし。中心部は少し混んでいました。", reactions: 18, avatar: "飛" },
+  { area: "伊勢市", time: "1時間前", title: "おはらい町、午後から雨が強くなっています", body: "折りたたみ傘より大きめの傘がおすすめです。", reactions: 31, avatar: "伊" },
+];
+
+const areaLinks = [
+  ["愛知", "名古屋", "尾張・犬山", "知多半島", "西三河", "東三河"],
+  ["岐阜", "岐阜・西濃", "東濃", "郡上", "下呂", "飛騨高山"],
+  ["三重", "北勢", "伊賀", "松阪", "伊勢志摩", "東紀州"],
+  ["静岡", "伊豆・熱海", "沼津・三島", "富士", "静岡・清水", "浜松"],
+];
+
+export default function Home() {
+  const [prefecture, setPrefecture] = useState<Prefecture>("すべて");
+  const [timing, setTiming] = useState<Timing>("今日");
+  const [query, setQuery] = useState("");
+  const [saved, setSaved] = useState<number[]>([]);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const filteredEvents = useMemo(() => {
+    const term = query.trim().toLowerCase();
+    return events.filter((event) => {
+      const prefectureMatch = prefecture === "すべて" || event.prefecture === prefecture;
+      const timingMatch =
+        timing === "今週末"
+          ? event.date === "今週末" || event.date === "今日" || event.date === "明日"
+          : event.date === timing;
+      const queryMatch =
+        !term || `${event.title}${event.area}${event.category}${event.tags.join("")}`.toLowerCase().includes(term);
+      return prefectureMatch && timingMatch && queryMatch;
+    });
+  }, [prefecture, timing, query]);
+
+  function toggleSaved(id: number) {
+    setSaved((current) => (current.includes(id) ? current.filter((item) => item !== id) : [...current, id]));
+  }
+
+  function selectPrefecture(next: Prefecture) {
+    setPrefecture(next);
+    document.getElementById("events")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  return (
+    <main>
+      <header className="site-header">
+        <a className="brand" href="#top" aria-label="中部・東海ナビ ホーム">
+          <span className="brand-mark" aria-hidden="true"><i /><i /><i /><i /></span>
+          <span><b>中部・東海</b>ナビ<small>CHUBU TOKAI NAVI</small></span>
+        </a>
+        <nav className={menuOpen ? "global-nav open" : "global-nav"} aria-label="メインナビゲーション">
+          <a href="#events">今日・明日</a>
+          <a href="#events">イベント</a>
+          <a href="#openings">開店・閉店</a>
+          <a href="#community">みんなの投稿</a>
+          <a href="#areas">エリア</a>
+        </nav>
+        <div className="header-actions">
+          <button className="saved-button" type="button" aria-label={`保存済み ${saved.length}件`}>
+            <span aria-hidden="true">♡</span><b>{saved.length}</b>
+          </button>
+          <button className="post-button" type="button"><span>＋</span> 情報を投稿</button>
+          <button
+            className="menu-button"
+            type="button"
+            aria-label="メニューを開く"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((current) => !current)}
+          >
+            <span /><span />
+          </button>
+        </div>
+      </header>
+
+      <section className="hero" id="top">
+        <div className="hero-orbit orbit-one" />
+        <div className="hero-orbit orbit-two" />
+        <div className="hero-content">
+          <p className="eyebrow"><span>LIVE</span> 愛知・岐阜・三重・静岡のいま</p>
+          <h1>この週末、<br /><em>近くで何する？</em></h1>
+          <p className="hero-copy">地元の人が届ける、今日使えるおでかけ情報。</p>
+
+          <div className="search-panel">
+            <label className="search-box">
+              <span aria-hidden="true">⌕</span>
+              <input
+                type="search"
+                placeholder="イベント、場所、エリアを検索"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+              />
+              <kbd>検索</kbd>
+            </label>
+            <div className="quick-filters" aria-label="日付で絞り込む">
+              {(["今日", "明日", "今週末"] as Timing[]).map((item) => (
+                <button
+                  type="button"
+                  key={item}
+                  className={timing === item ? "active" : ""}
+                  onClick={() => setTiming(item)}
+                >
+                  {item === "今週末" && <span className="calendar-dot" aria-hidden="true">27</span>}
+                  {item}
+                </button>
+              ))}
+              <button type="button" onClick={() => setQuery("無料")}>¥ 無料</button>
+              <button type="button" onClick={() => setQuery("子ども")}>♧ 子どもと</button>
+            </div>
+          </div>
+
+          <div className="prefecture-picker" aria-label="県を選択">
+            {prefectures.map((item) => (
+              <button
+                className={`prefecture ${item.tone} ${prefecture === item.name ? "selected" : ""}`}
+                type="button"
+                key={item.name}
+                onClick={() => selectPrefecture(item.name)}
+              >
+                <span className="prefecture-shape">{item.name.slice(0, 1)}</span>
+                <span><b>{item.name}</b><small>{item.kana}</small></span>
+                <i aria-hidden="true">→</i>
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="hero-note">
+          <span className="pulse" /> いま、東海4県で <b>428件</b> の情報が更新中
+        </div>
+      </section>
+
+      <section className="section events-section" id="events">
+        <div className="section-heading">
+          <div>
+            <p className="section-kicker">WHAT&apos;S ON</p>
+            <h2>{prefecture === "すべて" ? "東海4県" : prefecture}の{timing}、何がある？</h2>
+          </div>
+          <div className="section-controls">
+            <button className="location-button" type="button" onClick={() => setPrefecture("すべて")}>⌖ 現在地から</button>
+            <a href="#areas">すべて見る <span>→</span></a>
+          </div>
+        </div>
+
+        {filteredEvents.length > 0 ? (
+          <div className="event-grid">
+            {filteredEvents.map((event) => (
+              <article className="event-card" key={event.id}>
+                <div className={`event-visual ${event.visual}`}>
+                  <div className="date-card"><b>{event.day}</b><span>{event.month}</span></div>
+                  <span className="visual-word" aria-hidden="true">{event.prefecture}</span>
+                  <button
+                    className={saved.includes(event.id) ? "heart saved" : "heart"}
+                    type="button"
+                    aria-label={saved.includes(event.id) ? "保存を解除" : "保存する"}
+                    onClick={() => toggleSaved(event.id)}
+                  >
+                    {saved.includes(event.id) ? "♥" : "♡"}
+                  </button>
+                </div>
+                <div className="event-body">
+                  <div className="event-meta"><span>● {event.prefecture}・{event.area}</span><span>{event.time}</span></div>
+                  <h3>{event.title}</h3>
+                  <p className="event-category">{event.category} <b>·</b> {event.price}</p>
+                  <div className="tag-row">
+                    {event.tags.map((tag) => <span key={tag}>{tag}</span>)}
+                  </div>
+                  <p className="verified"><span>✓</span> {event.verified}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="empty-state">
+            <span>⌕</span>
+            <h3>条件に合う情報はまだありません</h3>
+            <p>別の日付やエリアで探してみてください。</p>
+            <button type="button" onClick={() => { setQuery(""); setPrefecture("すべて"); setTiming("今週末"); }}>条件をリセット</button>
+          </div>
+        )}
+      </section>
+
+      <section className="discovery-band">
+        <div className="section discovery-inner">
+          <div className="discovery-copy">
+            <p className="section-kicker light">DISCOVER TOKAI</p>
+            <h2>いつもの街にも、<br />まだ知らない景色がある。</h2>
+            <p>地元の人の「行ってきた」から見つける、東海の小さな発見。</p>
+            <a href="#community">みんなの発見を見る <span>→</span></a>
+          </div>
+          <div className="discovery-cards" aria-label="おすすめテーマ">
+            <article className="feature-card feature-mountain">
+              <span className="feature-number">01</span>
+              <div><small>GIFU · HIDA</small><h3>風が通る、<br />飛騨の朝。</h3><p>地元民がすすめる朝散歩</p></div>
+            </article>
+            <article className="feature-card feature-coast">
+              <span className="feature-number">02</span>
+              <div><small>MIE · SHIMA</small><h3>海辺で過ごす、<br />夏の午後。</h3><p>静かな入り江と寄り道</p></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section className="section split-section">
+        <div className="openings" id="openings">
+          <div className="mini-heading">
+            <div><p className="section-kicker">NEW IN TOWN</p><h2>まちの新しいお店</h2></div>
+            <a href="#openings">一覧へ →</a>
+          </div>
+          <div className="opening-list">
+            {openings.map((item, index) => (
+              <article key={item.title}>
+                <div className={`opening-thumb thumb-${index + 1}`}><span>{item.kind}</span></div>
+                <div className="opening-content">
+                  <div><span className={item.type === "RENEW" ? "renew-badge" : "new-badge"}>{item.type}</span><small>{item.date} OPEN</small></div>
+                  <h3>{item.title}</h3>
+                  <p>● {item.prefecture}・{item.area}　{item.kind}</p>
+                </div>
+                <span className="arrow-circle">→</span>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div className="community" id="community">
+          <div className="mini-heading">
+            <div><p className="section-kicker">LOCAL VOICES</p><h2>現地から届いた声</h2></div>
+            <span className="live-badge"><i /> LIVE</span>
+          </div>
+          <div className="post-list">
+            {posts.map((post) => (
+              <article key={post.title}>
+                <div className="post-avatar">{post.avatar}</div>
+                <div className="post-content">
+                  <p className="post-meta">{post.area}<span>・{post.time}</span></p>
+                  <h3>{post.title}</h3>
+                  <p>{post.body}</p>
+                  <div className="post-actions"><span>♡ {post.reactions}</span><span>返信</span><span className="post-status">✓ 現地投稿</span></div>
+                </div>
+              </article>
+            ))}
+          </div>
+          <button className="community-button" type="button">あなたの街の「いま」を投稿する <span>＋</span></button>
+        </div>
+      </section>
+
+      <section className="area-section" id="areas">
+        <div className="section">
+          <div className="section-heading">
+            <div><p className="section-kicker">EXPLORE BY AREA</p><h2>エリアから見つける</h2></div>
+            <p className="area-lead">4県、全市町村の情報を<br />地域の目線で。</p>
+          </div>
+          <div className="area-grid">
+            {areaLinks.map(([pref, ...areas], index) => (
+              <article className={`area-column area-${index + 1}`} key={pref}>
+                <button type="button" onClick={() => selectPrefecture(pref as Prefecture)}>
+                  <span><b>{pref}</b><small>{prefectures[index].kana}</small></span><i>→</i>
+                </button>
+                <ul>{areas.map((area) => <li key={area}><a href="#events">{area}<span>›</span></a></li>)}</ul>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="newsletter">
+        <div>
+          <p className="section-kicker light">YOUR WEEKEND, SORTED.</p>
+          <h2>週末の予定、木曜に届きます。</h2>
+          <p>登録したエリアのイベント・新店情報をまとめてお知らせ。</p>
+        </div>
+        <form onSubmit={(event) => event.preventDefault()}>
+          <label><span>メールアドレス</span><input type="email" placeholder="you@example.com" /></label>
+          <button type="submit">無料で受け取る →</button>
+        </form>
+      </section>
+
+      <footer>
+        <div className="footer-main">
+          <a className="brand footer-brand" href="#top">
+            <span className="brand-mark" aria-hidden="true"><i /><i /><i /><i /></span>
+            <span><b>中部・東海</b>ナビ<small>CHUBU TOKAI NAVI</small></span>
+          </a>
+          <p>愛知・岐阜・三重・静岡の<br />今日使える、地元の情報。</p>
+          <div className="footer-links">
+            <div><b>見つける</b><a href="#events">今日・明日</a><a href="#events">イベント</a><a href="#openings">開店・閉店</a></div>
+            <div><b>参加する</b><a href="#community">情報を投稿</a><a href="#community">地域の質問</a><a href="#community">訂正を依頼</a></div>
+            <div><b>中部・東海ナビ</b><a href="#top">私たちについて</a><a href="#top">運営ポリシー</a><a href="#top">お問い合わせ</a></div>
+          </div>
+        </div>
+        <div className="footer-bottom"><span>© 2026 CHUBU TOKAI NAVI</span><span>情報の正確性を大切に、地域と一緒につくるナビ。</span></div>
+      </footer>
+    </main>
+  );
+}
