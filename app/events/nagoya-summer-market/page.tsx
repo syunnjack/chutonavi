@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import RoutePlanner from "../../_components/RoutePlanner";
+import WeatherPanel from "../../_components/WeatherPanel";
+import { getWeatherFallback } from "../../_data/weatherFallback";
 
 export const metadata: Metadata = {
   title: "なごや夏の夜市2026｜開催時間・アクセス・混雑情報",
@@ -24,6 +26,7 @@ export default function EventPage() {
     <div className="content-breadcrumb"><Link href="/">ホーム</Link><span>›</span><Link href="/aichi">愛知</Link><span>›</span>なごや夏の夜市</div>
     <article>
       <div className="event-detail-hero"><div><span>公式確認済み</span><p>愛知 · 名古屋・栄</p><h1>なごや夏の夜市<br />2026</h1><p>屋台と音楽で楽しむ、名古屋の夏の一日。</p></div><div className="event-detail-art"><b>夏</b><small>NAGOYA<br />SUMMER<br />MARKET</small></div></div>
+      <WeatherPanel prefecture="愛知・イベント会場" location="名古屋市・久屋大通公園" latitude={35.1815} longitude={136.9066} initialData={getWeatherFallback(35.1815)} />
       <div className="event-detail-layout">
         <div className="event-main">
           <section className="event-answer"><p className="content-kicker">結論から</p><h2>今日11時から、久屋大通公園で開催。</h2><p>入場無料、雨天決行です。子ども向け企画は17時まで。混雑を避けるなら14時以前の来場がおすすめです。</p></section>

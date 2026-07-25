@@ -275,8 +275,6 @@ export default function Home() {
                   <small>現在の天気</small>
                   <strong>{Math.round(getWeatherFallback(item.latitude).current.temperature_2m)}℃</strong>
                   <b>{item.weatherLabel}</b>
-                  <em>最高 {Math.round(getWeatherFallback(item.latitude).daily.temperature_2m_max[0])}℃ / 最低 {Math.round(getWeatherFallback(item.latitude).daily.temperature_2m_min[0])}℃</em>
-                  <i>降水 {getWeatherFallback(item.latitude).daily.precipitation_probability_max[0]}%</i>
                 </span>
                 <span className="prefecture-main">
                   <span className="prefecture-shape">{item.name.slice(0, 1)}</span>

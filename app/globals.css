@@ -98,7 +98,7 @@ button { color: inherit; }
 .quick-filters button:hover, .quick-filters button.active { background: var(--lime); border-color: var(--lime); color: var(--forest); }
 .calendar-dot { background: white; border-radius: 2px; color: var(--forest); font-size: 8px; margin-right: 6px; padding: 2px 3px; }
 .prefecture-picker { display: grid; gap: 1px; grid-template-columns: repeat(4, 1fr); margin-top: 58px; }
-.prefecture { background: #fff; border: 0; cursor: pointer; display: flex; flex-direction:column; min-height: 178px; padding: 0; position: relative; text-align: left; transition: transform .2s, background .2s; }
+.prefecture { background: #fff; border: 0; cursor: pointer; display: flex; flex-direction:column; min-height: 158px; padding: 0; position: relative; text-align: left; transition: transform .2s, background .2s; }
 .prefecture:hover, .prefecture.selected { background: var(--cream); transform: translateY(-5px); z-index: 2; }
 .prefecture-shape { align-items: center; background: #eee; border-radius: 50% 40% 45% 35%; color: white; display: flex; font-family: serif; font-size: 21px; height: 54px; justify-content: center; margin-right: 14px; transform: rotate(-8deg); width: 54px; }
 .prefecture.coral .prefecture-shape { background: var(--coral); }
@@ -109,8 +109,6 @@ button { color: inherit; }
 .prefecture-weather small { color:#d8f24a; font-size:7px; font-weight:900; letter-spacing:.08em; }
 .prefecture-weather strong { font-family:serif; font-size:22px; grid-row:1/3; grid-column:2; }
 .prefecture-weather b { color:white; font-size:10px; }
-.prefecture-weather em,.prefecture-weather i { color:rgba(255,255,255,.7); font-size:7px; font-style:normal; }
-.prefecture-weather i { margin-left:0; }
 .prefecture-main { align-items:center; display:flex; flex:1; padding:14px 18px; width:100%; }
 .prefecture-name { display:flex; flex-direction:column; }
 .prefecture-main > i { color:var(--ink); font-style:normal; margin-left:auto; }
