@@ -1,0 +1,16 @@
+{
+  "name": "中部・東海ナビ",
+  "short_name": "東海ナビ",
+  "description": "愛知・岐阜・三重・静岡の今日使える地域情報",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fffdf8",
+  "theme_color": "#193e2d",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
