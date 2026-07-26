@@ -79,6 +79,18 @@ const events = [
     visual: "lake",
     verified: "公式確認済み",
   },
+  { id:5, url:"https://aichinow.pref.aichi.jp/events/detail/53/", prefecture:"愛知", area:"名古屋市", date:"今週末", day:"31", month:"7月", time:"7/31〜8/2", title:"世界コスプレサミット2026", category:"文化・コスプレ", price:"会場により異なる", tags:["栄・大須", "公式掲載"], visual:"lantern", verified:"Aichi Now確認済み" },
+  { id:6, url:"https://aichinow.pref.aichi.jp/events/calendar/2026-08-01/", prefecture:"愛知", area:"名古屋市", date:"今週末", day:"01", month:"8月", time:"7/25〜9/27", title:"徳川美術館 夏季特別展「武芸 サムライ・アスリート」", category:"美術館・歴史", price:"有料", tags:["屋内", "雨の日"], visual:"market", verified:"Aichi Now確認済み" },
+  { id:7, url:"https://aichinow.pref.aichi.jp/events/?s_genre%5B%5D=50&search_flg=1", prefecture:"愛知", area:"一宮市", date:"今週末", day:"01", month:"8月", time:"7/18〜8/31", title:"138タワーパーク サマーフェスタ", category:"家族・公園", price:"一部無料", tags:["子ども向け", "夜間開催あり"], visual:"lake", verified:"Aichi Now確認済み" },
+  { id:8, url:"https://www.kankou-gifu.jp/article/detail_120.html", prefecture:"岐阜", area:"各務原市", date:"今週末", day:"01", month:"8月", time:"夜間", title:"日本ライン夏まつりロングラン花火", category:"花火・夏祭り", price:"観覧無料", tags:["8/1〜8/10", "天候確認"], visual:"dance", verified:"岐阜県観光公式確認済み" },
+  { id:9, url:"https://www.kankou-gifu.jp/event/index_1_2_26.html", prefecture:"岐阜", area:"郡上市", date:"今週末", day:"01", month:"8月", time:"夜間", title:"郡上おどり 2026", category:"伝統・祭り", price:"観覧無料", tags:["夜イベント", "公共交通推奨"], visual:"dance", verified:"岐阜県観光公式確認済み" },
+  { id:10, url:"https://www.kankomie.or.jp/season/article/73", prefecture:"三重", area:"桑名市", date:"今週末", day:"01", month:"8月", time:"8/1〜8/2", title:"石取祭 2026", category:"伝統・祭り", price:"観覧無料", tags:["ユネスコ", "交通規制確認"], visual:"lantern", verified:"観光三重確認済み" },
+  { id:11, url:"https://www.kankomie.or.jp/season/article/73", prefecture:"三重", area:"県内各地", date:"今週末", day:"01", month:"8月", time:"7月〜9月", title:"三重県の夏祭り・イベント2026", category:"夏祭り・花火", price:"イベントによる", tags:["公式特集", "開催確認"], visual:"market", verified:"観光三重確認済み" },
+  { id:12, url:"https://hellonavi.jp/event/", prefecture:"静岡", area:"静岡市清水区", date:"今週末", day:"02", month:"8月", time:"夜間", title:"第77回 清水みなと祭り海上花火大会", category:"花火・港祭り", price:"観覧場所による", tags:["約1万発", "公共交通推奨"], visual:"lantern", verified:"Hello Navi確認済み" },
+  { id:13, url:"https://hellonavi.jp/event/", prefecture:"静岡", area:"島田市", date:"今週末", day:"01", month:"8月", time:"夜間", title:"大井川大花火大会", category:"花火・夏祭り", price:"観覧無料", tags:["大井川", "天候確認"], visual:"lantern", verified:"Hello Navi確認済み" },
+  { id:14, url:"https://hellonavi.jp/event/", prefecture:"静岡", area:"浜松市", date:"今週末", day:"31", month:"8月まで", time:"7/1〜8/31", title:"浜名湖ガーデンパーク Summer Festa 2026", category:"家族・自然", price:"入園無料", tags:["ひまわり迷路", "屋内企画あり"], visual:"lake", verified:"Hello Navi確認済み" },
+  { id:15, url:"https://hellonavi.jp/event/", prefecture:"静岡", area:"熱海市", date:"今週末", day:"24", month:"8月まで", time:"開催日指定", title:"熱海海上花火大会 2026夏季", category:"花火・温泉", price:"観覧場所による", tags:["宿泊向け", "開催日確認"], visual:"lantern", verified:"Hello Navi確認済み" },
+  { id:16, url:"https://hellonavi.jp/event/", prefecture:"静岡", area:"伊東市", date:"今週末", day:"29", month:"8月まで", time:"7/24〜8/29", title:"伊東温泉「夢花火」2026", category:"花火・温泉", price:"観覧無料", tags:["宿泊向け", "全9回"], visual:"lantern", verified:"Hello Navi確認済み" },
 ];
 
 const openings = [
